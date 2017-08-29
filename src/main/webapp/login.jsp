@@ -5,9 +5,10 @@
 <head> 
 <link  rel="stylesheet" href="styles.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>login</title>
+<title>login</title> 
 <%
-String message = "connecté en tant que " + request.getParameter("username");
+String username = request.getParameter("username");
+String message = "connecté en tant que " + username;
 %>
 </head>
 <body>
@@ -20,6 +21,10 @@ String message = "connecté en tant que " + request.getParameter("username");
         <input type="submit" value="login"/>
     </form>    <hr/>
     message= <b><%=message%></b>
+<%if(username!=null && username.equals("toto")) {%>
+<i>le username vaut toto</i>
+<%} %>
+ 
 <%@include file="footer.jsp" %>    
 </body>
 </html>
