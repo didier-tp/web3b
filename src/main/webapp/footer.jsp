@@ -1,3 +1,3 @@
 <div class="piedPage">
   <a href="index.html">index</a> , mentions légales , ...
-</div>
+</div> 
