@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>login</title>
 <%
-String message = "connecté en tant que" + request.getParameter("username");
+String message = "connecté en tant que " + request.getParameter("username");
 %>
 </head>
 <body>
