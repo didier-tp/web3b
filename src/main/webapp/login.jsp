@@ -5,25 +5,34 @@
 <head> 
 <link  rel="stylesheet" href="styles.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>login</title> 
+<title>login</title>
+
 <%
+String message =""; 
 String username = request.getParameter("username");
-String message = "connecté en tant que " + username;
+String password = request.getParameter("password");
+if(username!=null && password!=null){
+	if(!password.equals("pwd"+username)){
+	   message = "mot de passe incorrect (pas pwdusername)" ;
+	}else{
+		session.setAttribute("username",username);
+		message = "connecté en tant que " + username;
+	}
+}
+
 %>
 </head>
 <body>
 <%@include file="header.jsp" %>
 <h3>login</h3>
-<form method="get" action="">
+<form method="post" action="">
     <!--  si action="" la page se rappelle elle meme -->
         username: <input name="username"  /> <br/>
         password: <input name="password" /> <br/>
         <input type="submit" value="login"/>
     </form>    <hr/>
     message= <b><%=message%></b>
-<%if(username!=null && username.equals("toto")) {%>
-<i>le username vaut toto</i>
-<%} %>
+
  
 <%@include file="footer.jsp" %>    
 </body>

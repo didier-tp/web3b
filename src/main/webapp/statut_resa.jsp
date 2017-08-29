@@ -5,25 +5,16 @@
 <head> 
 <link  rel="stylesheet" href="styles.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>welcome</title>
+<title>statut_resa</title>
 </head>
-<%
-String lienResa = "";
-String lienLogin = "";
-String username=(String) session.getAttribute("username");
-if(username!=null){
-	lienResa="param_resa.jsp";
-}else{
-	lienLogin = "login.jsp";
-}
-%>
 <body>
 <%@include file="header.jsp" %>
- <h1>(welcome) Compagnie-aerienne - username= <%=username%></h1>
- <ul>
-   <li> <a   href="<%=lienLogin%>">login</a> </li>
-   <li> <a href="<%=lienResa%>">reservation</a> </li>
- </ul>
+ <h3>réservation effectuée</h3>
+ username: <b>${resa.username}</b> <br/>
+ date: <i>${resa.date}</i> <br/>
+ villeDepart: <b>${resa.villeDepart}</b> <br/>
+ villeArrivee: <b>${resa.villeArrivee}</b> <br/>
+ 
 <%@include file="footer.jsp" %>    
 </body>
 </html>
