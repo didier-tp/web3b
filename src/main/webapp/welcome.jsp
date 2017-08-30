@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <html>
 <head> 
 <link  rel="stylesheet" href="styles.css">
@@ -8,21 +8,41 @@
 <title>welcome</title>
 </head>
 <%
-String lienResa = "";
-String lienLogin = "";
-String username=(String) session.getAttribute("username");
-if(username!=null){
-	lienResa="param_resa.jsp";
+String username=null;
+String deconnexion = request.getParameter("deconnexion");
+if(deconnexion!=null){
+	session.invalidate();
 }else{
-	lienLogin = "login.jsp";
+	username=(String) session.getAttribute("username");
+}
+String visibilityResa = "hidden";
+String visibilityLogin = "hidden"; 
+boolean connecte=(Boolean) (username!=null);
+pageContext.setAttribute("connecte", connecte); //pour acces via syntaxe ${connecte} dans cette page
+if(username!=null){
+	visibilityResa="visible";
+}else{
+	visibilityLogin = "visible";
 }
 %>
 <body>
 <%@include file="header.jsp" %>
- <h1>(welcome) Compagnie-aerienne - username= <%=username%></h1>
+ <h1>(welcome) Compagnie-aerienne </h1>
+ <b>
+ <c:if test="${connecte}" >
+ 	utilisateur connecté : <%=username%> <br/>
+ 	<form method="get" action="">
+ 	   <input type="submit" name="deconnexion" value="deconnexion" />
+ 	</form>
+ </c:if>
+ <c:if test="${!connecte}" >
+ 	utilisateur non connecté .
+ </c:if>
+ </b>
+ <hr/>
  <ul>
-   <li> <a   href="<%=lienLogin%>">login</a> </li>
-   <li> <a href="<%=lienResa%>">reservation</a> </li>
+   <li style="visibility:<%=visibilityLogin%>"> <a href="login.jsp">login</a> </li>
+   <li style="visibility:<%=visibilityResa%>"> <a href="param_resa.jsp">reservation</a> </li>
  </ul>
 <%@include file="footer.jsp" %>    
 </body>

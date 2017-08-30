@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <html>
 <head> 
 <link  rel="stylesheet" href="styles.css">
@@ -8,7 +8,7 @@
 <title>login</title>
 
 <%
-String message =""; 
+String message ="";
 String username = request.getParameter("username");
 String password = request.getParameter("password");
 if(username!=null && password!=null){
@@ -19,7 +19,9 @@ if(username!=null && password!=null){
 		message = "connecté en tant que " + username;
 	}
 }
-
+boolean connecte=(Boolean) (session.getAttribute("username")!=null);
+pageContext.setAttribute("connecte", connecte); //pour acces via syntaxe ${connecte} dans cette page
+String msgColor = connecte ? "green" : "red";
 %>
 </head>
 <body>
@@ -31,7 +33,11 @@ if(username!=null && password!=null){
         password: <input name="password" /> <br/>
         <input type="submit" value="login"/>
     </form>    <hr/>
-    message= <b><%=message%></b>
+    message= <span style="color:<%=msgColor%>"><b><%=message%></b></span>
+    <hr/>
+    <c:if test="${connecte}" >
+        <a href="welcome.jsp">menu utilisateur connecté</a>
+    </c:if>
 
  
 <%@include file="footer.jsp" %>    

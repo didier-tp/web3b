@@ -16,10 +16,10 @@
         arrivee: <select name="villeArrivee">
                   <option>Toulouse</option><option>Paris</option><option>Nice</option>
                 </select> <br/>
-        date: <input name="date" type="date"/> <br/>
+        date: <input name="date" type="date" value="${resa.date}"/> <br/>
         <input type="submit" value="reserver"/>
     </form>
- 
+    <span style="color:red">${errMsg}</span>
 <%@include file="footer.jsp" %>    
 </body>
 </html>

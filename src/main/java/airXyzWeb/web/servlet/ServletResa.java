@@ -1,6 +1,8 @@
 package airXyzWeb.web.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,6 +33,7 @@ public class ServletResa extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String suite="statut_resa.jsp";
 		String villeDepart = request.getParameter("villeDepart");
 		String villeArrivee = request.getParameter("villeArrivee");
 		String sDate = request.getParameter("date");
@@ -42,9 +45,27 @@ public class ServletResa extends HttpServlet {
 		reservation.setUsername((String)session.getAttribute("username"));
 		
 		request.setAttribute("resa", reservation);
+		if(sDate!=null){
+			//System.out.println("sDate:"+sDate);
+			SimpleDateFormat df1= new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat df2= new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				df1.parse(sDate);
+			} catch (ParseException e1) {
+				try{
+					df2.parse(sDate);
+				}
+				catch (ParseException e2) {
+				     suite="param_resa.jsp";
+				    //+ message + value="${resa.xxx}" dans param_resa.jsp
+				    request.setAttribute("errMsg", "date invalide (pas dd/MM/yyyy ni yyyy-MM-dd)");
+				}
+			}
+			
+		}
 		
 		RequestDispatcher rd = this.getServletContext()
-				.getRequestDispatcher("/" + "statut_resa.jsp");
+				.getRequestDispatcher("/" + suite);
 		//redirection (coté serveur) du servlet vers page jsp:
 		rd.forward(request, response);
 
